@@ -1,14 +1,14 @@
 import Head from 'next/head'
 import Image from 'next/image'
+
 import Layout from '../layout/Layout'
+import Product from '../components/Product'
 
 import useQuiosco from '../hooks/useQuiosco'
 
 export default function Home(){
 
   const { currentCategory } = useQuiosco();
-
-  console.log(currentCategory, 'Cantilever');
 
   return(
     <Layout page={`Menu-${currentCategory?.name}`}>
@@ -18,6 +18,18 @@ export default function Home(){
       <p className='text-2xl mt-10'>
         Elige y personaliza tu pedido a continuación
       </p>
+
+      <div className='grid gap-4 grid-cols-2 xl:grid-cols-3
+      2xl:grid-cols-4'
+      >
+        {currentCategory?.products.map( product => (
+          <Product
+            key={product.id}
+            product={product}
+          />
+        ))}
+      </div>
+
     </Layout>
   )
 }
