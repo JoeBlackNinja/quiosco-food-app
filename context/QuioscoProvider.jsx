@@ -7,6 +7,31 @@ const QuioscoProvider = ({children}) => {
 
     const [categories, setCategories] = useState([]);
     const [currentCategory, setCurrentCategory] = useState({});
+    const [productUS, setProductUS] = useState({});
+    const [modal, setModal] = useState(false);
+    const [order,setOrder] = useState([]);
+
+    const handleSetOrder = ({categoryId, image, ...product_}) => {
+        if(order.some(productState => productState.id === product_.id)){
+            //Update quantity
+            const orderUpdated = order.map(
+                producState => producState.id === product_.id ? 
+                product_ : producState
+            );
+            setOrder(orderUpdated);
+        } else {
+            setOrder([...order, product_]);
+        }
+        setModal(false);
+    }
+
+    const handleSetModal = () => {
+        setModal(!modal);
+    }
+
+    const handleSetProductUS = (product_) => {
+        setProductUS(product_);
+    }
 
     const getCategories = async () => {
         const res = await fetch('/api/categories')
@@ -32,7 +57,13 @@ const QuioscoProvider = ({children}) => {
         value={{
             categories,
             currentCategory,
-            handleClickCategories
+            handleClickCategories,
+            productUS,
+            handleSetProductUS,
+            modal,
+            handleSetModal,
+            order,
+            handleSetOrder
         }}
         >
             {children}

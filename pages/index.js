@@ -22,12 +22,12 @@ export default function Home(){
       <div className='grid gap-4 grid-cols-2 xl:grid-cols-3
       2xl:grid-cols-4'
       >
-        {currentCategory?.products.map( product => (
+        {currentCategory?.products && (currentCategory.products.map( product => (
           <Product
             key={product.id}
             product={product}
           />
-        ))}
+        )))}
       </div>
 
     </Layout>
