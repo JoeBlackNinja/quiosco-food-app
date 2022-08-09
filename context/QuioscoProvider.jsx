@@ -1,4 +1,7 @@
 import { useState, useEffect, createContext } from "react";
+
+import { toast } from 'react-toastify';
+
 import Category from "../components/Category";
 
 const QuioscoContext = createContext();
@@ -11,7 +14,7 @@ const QuioscoProvider = ({children}) => {
     const [modal, setModal] = useState(false);
     const [order,setOrder] = useState([]);
 
-    const handleSetOrder = ({categoryId, image, ...product_}) => {
+    const handleSetOrder = ({categoryId, ...product_}) => {
         if(order.some(productState => productState.id === product_.id)){
             //Update quantity
             const orderUpdated = order.map(
@@ -19,8 +22,10 @@ const QuioscoProvider = ({children}) => {
                 product_ : producState
             );
             setOrder(orderUpdated);
+            toast.success('Changes saved success');
         } else {
             setOrder([...order, product_]);
+            toast.success('Added to order');
         }
         setModal(false);
     }
