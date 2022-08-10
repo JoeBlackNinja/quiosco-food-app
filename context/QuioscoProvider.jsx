@@ -2,8 +2,6 @@ import { useState, useEffect, createContext } from "react";
 
 import { toast } from 'react-toastify';
 
-import Category from "../components/Category";
-
 const QuioscoContext = createContext();
 
 const QuioscoProvider = ({children}) => {
@@ -48,6 +46,12 @@ const QuioscoProvider = ({children}) => {
         const category = categories.filter(cat => cat.id === id );
         setCurrentCategory(category[0]);
     }
+
+    const handleEditOrder = id => {
+        const productUpdate = order.filter(product => product.id === id);
+        setProductUS(productUpdate[0]);
+        setModal(!modal); 
+    }
     
     useEffect(() => {
         getCategories();
@@ -68,7 +72,8 @@ const QuioscoProvider = ({children}) => {
             modal,
             handleSetModal,
             order,
-            handleSetOrder
+            handleSetOrder,
+            handleEditOrder
         }}
         >
             {children}
